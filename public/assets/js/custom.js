@@ -310,11 +310,11 @@
 	});
 
 	//______Switcher
-	
+
 	/*Theme-layout*/
 	// $('body').addClass('light-mode');
 	// $('body').addClass('dark-mode');
-	
+
 	/*Header Style*/
 	// $('body').addClass('light-header');
 	// $('body').addClass('color-header');

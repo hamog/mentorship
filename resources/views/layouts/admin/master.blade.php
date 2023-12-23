@@ -41,6 +41,10 @@
     <!-- Select2 css -->
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
 
+    <!-- PersianDateTimePicker css -->
+    <link rel="stylesheet"
+          href="{{ asset('assets\PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.style.css') }}"/>
+
 </head>
 
 <body class="app sidebar-mini">
@@ -107,8 +111,14 @@
 <!-- Select2 js -->
 <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 
+<!-- PersianDateTimePicker js -->
+<script src="{{ asset('assets\PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.js') }}"
+        type="text/javascript"></script>
+
 <!-- Custom js-->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+@yield('scripts')
 
 </body>
 </html>
