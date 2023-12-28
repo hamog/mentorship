@@ -8,6 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/sort', function (\Illuminate\Http\Request $request) {
+    dd($request->all());
+})->name('sort');
+
 Route::middleware('guest')->name('admin.')->group(function () {
     //auth
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login.form');

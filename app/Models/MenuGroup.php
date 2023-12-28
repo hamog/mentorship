@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class MenuGroup extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'label',
+        'name'
+    ];
 }

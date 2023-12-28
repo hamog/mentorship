@@ -112,7 +112,11 @@
 <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 
 <!-- PersianDateTimePicker js -->
-<script src="{{ asset('assets\PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.js') }}"
+<script src="{{ asset('assets/PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.js') }}"
+        type="text/javascript"></script>
+
+<!-- Sortablejs -->
+<script src="{{ asset('assets/plugins/sortablejs/sortable.js') }}"
         type="text/javascript"></script>
 
 <!-- Custom js-->
