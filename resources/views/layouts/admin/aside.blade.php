@@ -27,9 +27,9 @@
                 </a>
             </li>
             <li class="slide">
-                <a class="side-menu__item"  href="">
+                <a class="side-menu__item"  href="{{ route('admin.menu.groups') }}">
                     <i class="feather feather-list sidemenu_icon"></i>
-                    <span class="side-menu__label">دسته بندی ها</span>
+                    <span class="side-menu__label">مدیریت منوها</span>
                 </a>
             </li>
 {{--            <li class="slide">--}}

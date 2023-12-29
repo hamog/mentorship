@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\MenuGroup::class)->constrained()->cascadeOnDelete();
             $table->nullableMorphs('linkable');
+            $table->string('title')->unique();
             $table->text('link')->nullable();
             $table->unsignedInteger('order')->nullable();
             $table->boolean('new_tab')->default(false);

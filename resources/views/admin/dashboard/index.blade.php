@@ -55,50 +55,6 @@
                             </div>
                         </div>
 
-                        <h6>منوها</h6>
-                        <form action="{{ route('sort') }}" method="post">
-                            @csrf
-
-                            <ul id="items" class="list-group">
-                                <li class="list-group-item">
-                                    <input type="hidden" value="1" name="menu[]"> Item 1
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-warning" data-toggle="modal"
-                                            data-target="#modelId">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                                <li class="list-group-item"><input type="hidden" value="2" name="menu[]"> item 2</li>
-                                <li class="list-group-item"><input type="hidden" value="3" name="menu[]"> item 3</li>
-                            </ul>
-                            <button class="btn btn-primary mt-3" type="submit">ذخیره مرتب سازی</button>
-                        </form>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="modelId" tabindex="-1" role="dialog"
-                         aria-labelledby="modelTitleId" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Body
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close
-                                    </button>
-                                    <button type="button" class="btn btn-primary">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -123,9 +79,5 @@
         $('.js-tags-example').select2({
             tags:true
         });
-
-        //sortablejs
-        var el = document.getElementById('items');
-        var sortable = Sortable.create(el);
     </script>
 @endsection

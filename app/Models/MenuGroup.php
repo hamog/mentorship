@@ -13,4 +13,9 @@ class MenuGroup extends Model
         'label',
         'name'
     ];
+
+    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MenuItem::class, 'menu_group_id');
+    }
 }
