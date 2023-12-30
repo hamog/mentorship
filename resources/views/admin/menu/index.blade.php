@@ -19,48 +19,65 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
+                                <h5 class="modal-title">ثبت منو</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
 
-                                <form>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form action="" method="post">
+                                            @csrf
 
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text"name="title">
-                                        </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="title">عنوان</label>
+                                                        <input class="form-control" type="text" name="title" id="title">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="linkable_type">نوع لینک</label>
+                                                        <select class="form-control" name="linkable_type" id="linkable_type">
+                                                            <option value="">نوع لینک را انتخاب کنید</option>
+                                                            @foreach($models as $key => $value)
+                                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                            @endforeach
+                                                            <option value="">لینک دلخواه</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="linkable_id">آیتم لینک</label>
+                                                        <select class="form-control" name="linkable_id" id="linkable_id" disabled>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{ $category->id }}" class="model">{{ $category->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="link">آیتم لینک</label>
+                                                        <input type="text" name="link" class="form-control" id="link" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <select name="linkable_type" id="">
-                                                @foreach($models as $key => $value)
-                                                    <option value="{{ $key }}" class="model">{{ $value }}</option>
-                                                @endforeach
-                                                <option value="" id="" class="custom-menu">لینک دلخواه</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <select name="linkable_id" id="" disabled>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}" class="model">{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" name="link" disabled>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                </div>
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                             </div>
                         </div>
                     </div>
@@ -85,16 +102,12 @@
                                 <li class="list-group-item">
                                     <input type="hidden" value="{{ $menuItem->id }}" name="menu[]"> {{ $menuItem->title }}
 
-                                    //edit
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-warning" data-toggle="modal"
                                             data-target="#edit-menu-{{ $menuItem->id }}">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                     </button>
 
-
-
-                                    //delete
                                     <button class="btn btn-danger btn-sm text-white" onclick="confirmDelete('delete-{{ $menuItem->id }}')"><i class="fa fa-trash-o"></i></button>
                                 </li>
                                 @endforeach
@@ -145,7 +158,20 @@
 @section('scripts')
     <script>
         //sortablejs
-        var el = document.getElementById('items');
-        var sortable = Sortable.create(el);
+        let el = document.getElementById('items');
+        let sortable = Sortable.create(el);
+
+        $(document).ready(function () {
+            $('#linkable_type').change(function () {
+                let val = $(this).val();
+                if (val) {
+                    $('#linkable_id').removeAttr('disabled');
+                    $('#link').attr('disabled', 'disabled');
+                } else {
+                    $('#link').removeAttr('disabled');
+                    $('#linkable_id').attr('disabled', 'disabled');
+                }
+            });
+        });
     </script>
 @endsection
