@@ -25,7 +25,38 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Body
+
+                                <form>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text"name="title">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <select name="linkable_type" id="">
+                                                @foreach($models as $key => $value)
+                                                    <option value="{{ $key }}" class="model">{{ $value }}</option>
+                                                @endforeach
+                                                <option value="" id="" class="custom-menu">لینک دلخواه</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select name="linkable_id" id="" disabled>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}" class="model">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" name="link" disabled>
+                                        </div>
+                                    </div>
+
+                                </form>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -45,19 +76,25 @@
             <div class="card">
                 <div class="card-body">
                         <h6>منوها</h6>
-                        <form action="" method="post">
+                        <form action="{{ route('admin.menu.sort') }}" method="post">
                             @csrf
 
                             <ul id="items" class="list-group">
 
                                 @foreach($menuItems as $menuItem)
                                 <li class="list-group-item">
-                                    <input type="hidden" value="1" name="menu[]"> {{ $menuItem->title }}
+                                    <input type="hidden" value="{{ $menuItem->id }}" name="menu[]"> {{ $menuItem->title }}
+
+                                    //edit
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-warning" data-toggle="modal"
                                             data-target="#edit-menu-{{ $menuItem->id }}">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                     </button>
+
+
+
+                                    //delete
                                     <button class="btn btn-danger btn-sm text-white" onclick="confirmDelete('delete-{{ $menuItem->id }}')"><i class="fa fa-trash-o"></i></button>
                                 </li>
                                 @endforeach
@@ -79,7 +116,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Body
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -96,6 +133,7 @@
                             @method('DELETE')
                         </form>
                     @endforeach
+
 
                 </div>
             </div>

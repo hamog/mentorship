@@ -23,5 +23,6 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     //menu
     Route::get('/menu/groups', [MenuController::class, 'groups'])->name('menu.groups');
+    Route::patch('/menu/sort', [MenuController::class, 'sortMenu'])->name('menu.sort');
     Route::apiResource('/menu', MenuController::class);
 });
