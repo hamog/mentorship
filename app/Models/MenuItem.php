@@ -18,12 +18,19 @@ class MenuItem extends Model implements Sortable
 
 
     const MODELS = [
-        Category::class => 'دسته بندی'
+        Category::class => 'دسته بندی',
+        User::class => 'کاربر',
     ];
 
 
-    public static function getAllCategories()
+    public static function getModelItems(): array
     {
-        return Category::where('type', 'news')->select(['id', 'name'])->get();
+        $items = [];
+
+        foreach (array_keys(static::MODELS) as $model) {
+            $items[$model] = app($model)->all();
+        }
+
+        return $items;
     }
 }
