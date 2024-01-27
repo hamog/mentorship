@@ -13,6 +13,6 @@ class Category extends Model
 
     public function getNameAttr()
     {
-        //
+        return 'Taylor';
     }
 }
