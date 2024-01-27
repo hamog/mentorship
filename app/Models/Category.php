@@ -11,8 +11,8 @@ class Category extends Model
         'name', 'email'
     ];
 
-    public function getNameAttr()
+    public function getNameAttr(): string
     {
-        return 'Taylor';
+        return 'My Name';
     }
 }
