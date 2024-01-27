@@ -10,4 +10,9 @@ class Category extends Model
     protected $fillable = [
         'name', 'email'
     ];
+
+    public function getNameAttr()
+    {
+        //
+    }
 }
