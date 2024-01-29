@@ -18,6 +18,30 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+
+        $admin = Role::where('name', 'admin')->first();
+
+        $viewPermission = Permission::create([
+            'name' => 'view categories',
+            'label' => 'نمایش دسته بندی ها'
+        ]);
+        $createPermission = Permission::create([
+            'name' => 'create categories',
+            'label' => 'ایجاد دسته بندی ها'
+        ]);
+        $updatePermission = Permission::create([
+            'name' => 'update categories',
+            'label' => 'ویرایش دسته بندی ها'
+        ]);
+        $deletePermission = Permission::create([
+            'name' => 'delete categories',
+            'label' => 'حذف دسته بندی ها'
+        ]);
+
+        $admin->givePermissionTo($viewPermission);
+        $admin->givePermissionTo($createPermission);
+        $admin->givePermissionTo($updatePermission);
+
     }
 
     /**

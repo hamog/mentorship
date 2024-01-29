@@ -40,6 +40,7 @@
                                                 </div>
                                             </div>
 
+                                            @can('delete users')
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-group">
@@ -70,6 +71,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endcan
 
                                         </form>
                                     </div>

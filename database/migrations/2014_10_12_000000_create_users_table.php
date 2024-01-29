@@ -22,12 +22,66 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        \App\Models\User::query()->create([
-            'name' => 'Admin',
+        $user = \App\Models\User::query()->create([
+            'name' => 'Super Admin',
             'mobile' => '09112702509',
             'email' => 'admin@admin.com',
             'password' => bcrypt('123456')
         ]);
+
+
+        //create roles
+        $superAdmin = Role::create([
+            'name' => 'super_admin',
+            'label' => 'مدیر ارشد'
+        ]);
+        $admin = Role::create([
+            'name' => 'admin',
+            'label' => 'مدیر'
+        ]);
+        $doctor = Role::create([
+            'name' => 'doctor',
+            'label' => 'دکتر'
+        ]);
+
+        //Assign super_admin role to user
+        $user->assignRole($superAdmin);
+
+
+        //generate permissions
+        $viewDashboardListOperations = Permission::create([
+            'name' => 'view dashboard list operations',
+            'label' => 'نمایش لیست عمل ها در داشبورد'
+        ]);
+        $viewDashboardStats = Permission::create([
+            'name' => 'view dashboard stats',
+            'label' => 'نمایش آمارها در داشبورد'
+        ]);
+        $viewDashboardInvoices = Permission::create([
+            'name' => 'view dashboard invoices',
+            'label' => 'نمایش لیست صورتحساب ها در داشبورد'
+        ]);
+
+
+        $viewPermission = Permission::create([
+            'name' => 'view users',
+            'label' => 'نمایش کاربران'
+        ]);
+        $createPermission = Permission::create([
+            'name' => 'create users',
+            'label' => 'ایجاد کاربران'
+        ]);
+        $updatePermission = Permission::create([
+            'name' => 'update users',
+            'label' => 'ویرایش کاربران'
+        ]);
+        $deletePermission = Permission::create([
+            'name' => 'delete users',
+            'label' => 'حذف کاربران'
+        ]);
+
+
+
     }
 
     /**
