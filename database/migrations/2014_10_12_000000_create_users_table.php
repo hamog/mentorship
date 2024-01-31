@@ -1,11 +1,15 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Role;
 
 return new class extends Migration
 {
+    use \App\Traits\HasPermission;
+
     /**
      * Run the migrations.
      */
@@ -22,61 +26,38 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $user = \App\Models\User::query()->create([
+        $user = User::query()->create([
             'name' => 'Super Admin',
             'mobile' => '09112702509',
             'email' => 'admin@admin.com',
             'password' => bcrypt('123456')
         ]);
 
+        //***** Create roles only in users migration **
+        $roles = [
+            'super_admin' => 'مدیر ارشد',
+            'admin' => 'مدیر'
+        ];
 
-        //create roles
-        $superAdmin = Role::create([
-            'name' => 'super_admin',
-            'label' => 'مدیر ارشد'
-        ]);
-        $admin = Role::create([
-            'name' => 'admin',
-            'label' => 'مدیر'
-        ]);
+        foreach ($roles as $name => $label) {
+            $role = new Role();
+            $role->label = $label;
+            $role->name = $name;
+            $role->save();
+        }
+        //*******************************************
 
-        //Assign super_admin role to user
-        $user->assignRole($superAdmin);
+        $permissions = [
+            'view users' => 'نمایش کاربران',
+            'create users' => 'ایجاد کاربران',
+            'edit users' => 'ویرایش کاربران',
+            'حذف users' => 'حذف کاربران',
+        ];
 
+        $permissionNames = $this->createPermissions($permissions);
 
-        //generate permissions
-        $viewDashboardListOperations = Permission::create([
-            'name' => 'view dashboard list operations',
-            'label' => 'نمایش لیست عمل ها در داشبورد'
-        ]);
-        $viewDashboardStats = Permission::create([
-            'name' => 'view dashboard stats',
-            'label' => 'نمایش آمارها در داشبورد'
-        ]);
-        $viewDashboardInvoices = Permission::create([
-            'name' => 'view dashboard invoices',
-            'label' => 'نمایش لیست صورتحساب ها در داشبورد'
-        ]);
-
-
-        $viewPermission = Permission::create([
-            'name' => 'view users',
-            'label' => 'نمایش کاربران'
-        ]);
-        $createPermission = Permission::create([
-            'name' => 'create users',
-            'label' => 'ایجاد کاربران'
-        ]);
-        $updatePermission = Permission::create([
-            'name' => 'update users',
-            'label' => 'ویرایش کاربران'
-        ]);
-        $deletePermission = Permission::create([
-            'name' => 'delete users',
-            'label' => 'حذف کاربران'
-        ]);
-
-
+        //assign permissions to role
+        $this->assignPermissions($permissionNames, 'admin');
 
     }
 
