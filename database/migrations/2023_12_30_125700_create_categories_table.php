@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    use \App\Traits\HasPermission;
     /**
      * Run the migrations.
      */
@@ -19,29 +20,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $admin = Role::where('name', 'admin')->first();
+        $permissions = [
+            'view categories' => 'نمایش دسته بندی ها',
+            'create categories' => 'ایجاد دسته بندی ها',
+            'edit categories' => 'ویرایش دسته بندی ها',
+            'حذف categories' => 'حذف دسته بندی ها',
+        ];
 
-        $viewPermission = Permission::create([
-            'name' => 'view categories',
-            'label' => 'نمایش دسته بندی ها'
-        ]);
-        $createPermission = Permission::create([
-            'name' => 'create categories',
-            'label' => 'ایجاد دسته بندی ها'
-        ]);
-        $updatePermission = Permission::create([
-            'name' => 'update categories',
-            'label' => 'ویرایش دسته بندی ها'
-        ]);
-        $deletePermission = Permission::create([
-            'name' => 'delete categories',
-            'label' => 'حذف دسته بندی ها'
-        ]);
+        $permissionNames = $this->createPermissions($permissions);
 
-        $admin->givePermissionTo($viewPermission);
-        $admin->givePermissionTo($createPermission);
-        $admin->givePermissionTo($updatePermission);
-
+        //assign permissions to role
+        $this->assignPermissions($permissionNames, 'admin');
     }
 
     /**
