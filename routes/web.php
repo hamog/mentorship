@@ -26,6 +26,8 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function () {
     Route::patch('/menu/sort', [MenuController::class, 'sortMenu'])->name('menu.sort');
     Route::apiResource('/menu', MenuController::class);
 
+    Route::resource('/surgeries', \App\Http\Controllers\SurgeryController::class);
+
     //users
     Route::middleware(['role:super_admin'])->group(function () {
         Route::resource('/users', UserController::class);
