@@ -26,26 +26,27 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.surgeries.store') }}" method="post">
+                    <form action="{{ route('admin.surgeries.update', [$surgery->id]) }}" method="post">
                         @csrf
+                        @method('PATCH')
 
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="patient_name" class="control-label">نام بیمار <span class="text-danger">&starf;</span></label>
-                                    <input type="text" class="form-control" name="patient_name" id="patient_name" placeholder="نام بیمار را اینجا وارد کنید" value="{{ old('patient_name') }}" required autofocus>
+                                    <input type="text" class="form-control" name="patient_name" id="patient_name" placeholder="نام بیمار را اینجا وارد کنید" value="{{ old('patient_name', $surgery->patient_name) }}" required autofocus>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="patient_national_code" class="control-label">کد ملی بیمار <span class="text-danger">&starf;</span></label>
-                                    <input type="text" class="form-control" name="patient_national_code" id="patient_national_code" placeholder="کد ملی بیمار را اینجا وارد کنید" value="{{ old('patient_national_code') }}" required>
+                                    <input type="text" class="form-control" name="patient_national_code" id="patient_national_code" placeholder="کد ملی بیمار را اینجا وارد کنید" value="{{ old('patient_national_code', $surgery->patient_national_code) }}" required>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="document_number" class="control-label">شماره سند <span class="text-danger">&starf;</span></label>
-                                    <input type="text" class="form-control" name="document_number" id="document_number" placeholder=" شماره سند را اینجا وارد کنید" value="{{ old('document_number') }}" required>
+                                    <input type="text" class="form-control" name="document_number" id="document_number" placeholder=" شماره سند را اینجا وارد کنید" value="{{ old('document_number', $surgery->document_number) }}" required>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +55,13 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="surgeried_at" class="control-label">تاریخ عمل <span class="text-danger">&starf;</span></label>
-                                    <input type="text" class="form-control" name="surgeried_at" id="surgeried_at" placeholder="تاریخ عمل را اینجا وارد کنید" value="{{ old('surgeried_at') }}" required>
+                                    <input type="text" class="form-control" name="surgeried_at" id="surgeried_at" placeholder="تاریخ عمل را اینجا وارد کنید" value="{{ old('surgeried_at', $surgery->surgeried_at) }}" required>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="released_at" class="control-label">تاریخ ترخیص <span class="text-danger">&starf;</span></label>
-                                    <input type="text" class="form-control" name="released_at" id="released_at" placeholder="تاریخ ترخیص را اینجا وارد کنید" value="{{ old('released_at') }}" required>
+                                    <input type="text" class="form-control" name="released_at" id="released_at" placeholder="تاریخ ترخیص را اینجا وارد کنید" value="{{ old('released_at', $surgery->released_at) }}" required>
                                 </div>
                             </div>
                             <div class="col">
@@ -69,7 +70,7 @@
                                     <span class="text-danger">&starf;</span>
                                     <select class="form-control select2" name="operations[]" id="operations" multiple required>
                                         @foreach($operations as $id => $name)
-                                            <option value="{{ $id }}" @selected(in_array($id, old('operations', [])))>{{ $name }}</option>
+                                            <option value="{{ $id }}" @selected(in_array($id, old('operations', $surgery->operations->pluck('id')->all())))>{{ $name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -87,7 +88,7 @@
                                         <select class="form-control" name="doctors[{{ $doctorRole->id }}]" id="role-{{ $doctorRole->id }}" @required($doctorRole->required)>
                                             <option class="text-muted" value="">-- نام دکتر مورد نظر را انتخاب کنید --</option>
                                             @foreach($doctorRole->doctors as $doctor)
-                                                <option value="{{ $doctor->id }}" @selected(in_array($doctor->id, old('doctors', [])))>{{ $doctor->name }}</option>
+                                                <option value="{{ $doctor->id }}" @selected(in_array($doctor->id, old('doctors', $surgery->doctors->where('pivot.doctor_role_id', $doctorRole->id)->pluck('id')->all())))>{{ $doctor->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,14 +101,14 @@
                                 <div class="form-group">
                                     <label for="description" class="control-label">توضیحات</label>
                                     <textarea class="form-control" name="description" id="description"
-                                              rows="3">{!! old('description') !!}</textarea>
+                                              rows="3">{!! old('description', $surgery->description) !!}</textarea>
                                 </div>
                             </div>
                         </div>
 
 
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">ثبت و ذخیره</button>
+                            <button type="submit" class="btn btn-warning">به روزسانی</button>
                         </div>
 
                     </form>

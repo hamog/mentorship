@@ -17,4 +17,16 @@ class Surgery extends Model
         'surgeried_at',
         'released_at'
     ];
+
+    public function operations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Operation::class, 'operation_surgery')
+            ->withPivot(['amount']);
+    }
+
+    public function doctors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Doctor::class, 'doctor_surgery')
+            ->withPivot(['doctor_role_id']);;
+    }
 }

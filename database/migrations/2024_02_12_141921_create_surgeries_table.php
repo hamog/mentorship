@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('surgeries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('basic_insurance_id')->constrained('insurances')->cascadeOnDelete();
-            $table->foreignId('supp_insurance_id')->constrained('insurances')->cascadeOnDelete();
+            $table->foreignId('basic_insurance_id')->nullable()->constrained('insurances')->cascadeOnDelete();
+            $table->foreignId('supp_insurance_id')->nullable()->constrained('insurances')->cascadeOnDelete();
             $table->string('patient_name');
             $table->string('patient_national_code');
             $table->string('document_number');

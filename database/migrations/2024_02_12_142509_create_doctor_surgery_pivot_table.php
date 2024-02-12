@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Doctor::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Surgery::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\DoctorRole::class)->constrained()->cascadeOnDelete();
-            $table->boolean('status')->default(true);
+            $table->foreignId('doctor_role_id');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

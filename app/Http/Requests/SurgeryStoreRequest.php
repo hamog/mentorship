@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\DoctorRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class SurgeryStoreRequest extends FormRequest
 {
@@ -21,7 +23,6 @@ class SurgeryStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        $this->dd();
         return [
             'patient_name' => 'required|string|max:100',
             'patient_national_code' => 'required|digits:10',
@@ -33,7 +34,45 @@ class SurgeryStoreRequest extends FormRequest
             'operations' => 'required|array',
             'operations.*' => 'required|integer|exists:operations,id',
 
-            'doctors_*' => 'required|integer|exists:doctors,id',
+            'doctors' => ['required', 'array'],
+            'doctors.*' => 'nullable|integer|exists:doctors,id',
         ];
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    protected function passedValidation()
+    {
+        $doctors = $this->input('doctors');
+        $findDuplicate = array_diff_assoc(
+            $doctors,
+            array_unique($doctors)
+        );
+
+        if (count($findDuplicate) > 0) {
+            throw ValidationException::withMessages([
+                'doctors' => ['برای هرنقش باید یک پزشک انتخاب کنید!']
+            ])
+                ->errorBag('default');
+        }
+
+        foreach ($doctors as $roleId => $doctorId) {
+            $role = DoctorRole::find($roleId);
+
+            if (!$role) {
+                throw ValidationException::withMessages([
+                    'doctors' => ['نقش پزشک وارد شده نامعتبر است!']
+                ])
+                    ->errorBag('default');
+            }
+
+            if ($role->required && is_null($doctorId)) {
+                throw ValidationException::withMessages([
+                        'doctors' => ["برای نقش {$role->title} انتخاب پزشک الزامی است."]
+                    ])
+                    ->errorBag('default');
+            }
+        }
     }
 }

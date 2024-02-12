@@ -34,11 +34,23 @@
                             <tr>
                                 <td>{{ $surgery->id }}</td>
                                 <td>
-
+                                    {{ implode(', ', $surgery->doctors->pluck('name')->all()) }}
                                 </td>
                                 <td>{{ $surgery->patient_name }}</td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    {{ implode(', ', $surgery->operations->pluck('name')->all()) }}
+                                </td>
+                                <td>
+
+                                    <a href="{{ route('admin.surgeries.edit', $surgery->id) }}" class="btn btn-warning">ویرایش</a>
+
+                                    <a href="#" class="btn btn-danger" onclick="event.preventDefault();
+                                                     document.getElementById('delete-surgery-{{ $surgery->id }}').submit();">حذف</a>
+                                    <form id="delete-surgery-{{ $surgery->id }}" action="{{ route('admin.surgeries.destroy', $surgery->id) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

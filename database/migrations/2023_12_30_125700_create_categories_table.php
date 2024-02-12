@@ -20,17 +20,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $permissions = [
-            'view categories' => 'نمایش دسته بندی ها',
-            'create categories' => 'ایجاد دسته بندی ها',
-            'edit categories' => 'ویرایش دسته بندی ها',
-            'حذف categories' => 'حذف دسته بندی ها',
-        ];
-
-        $permissionNames = $this->createPermissions($permissions);
-
-        //assign permissions to role
-        $this->assignPermissions($permissionNames, 'admin');
+//        $permissions = [
+//            'view categories' => 'نمایش دسته بندی ها',
+//            'create categories' => 'ایجاد دسته بندی ها',
+//            'edit categories' => 'ویرایش دسته بندی ها',
+//            'حذف categories' => 'حذف دسته بندی ها',
+//        ];
+//
+//        $permissionNames = $this->createPermissions($permissions);
+//
+//        //assign permissions to role
+//        $this->assignPermissions($permissionNames, 'admin');
     }
 
     /**
