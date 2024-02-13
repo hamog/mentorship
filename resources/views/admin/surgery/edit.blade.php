@@ -78,6 +78,31 @@
                         </div>
 
                         <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="basic_insurance_id" class="control-label">بیمه پایه</label>
+                                    <select class="form-control" name="basic_insurance_id" id="basic_insurance_id">
+                                        <option value="" class="text-muted">--  بیمه پایه مورد نظر را انتخاب کنید --</option>
+                                        @foreach($basicInsurances as $basicInsurance)
+                                            <option value="{{ $basicInsurance->id }}" @selected($basicInsurance->id == old('basic_insurance_id', $surgery->basic_insurance_id))>{{ $basicInsurance->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="supp_insurance_id" class="control-label">بیمه تکمیلی</label>
+                                    <select class="form-control" name="supp_insurance_id" id="supp_insurance_id">
+                                        <option value="" class="text-muted">--  بیمه تکمیلی مورد نظر را انتخاب کنید --</option>
+                                        @foreach($suppInsurances as $suppInsurance)
+                                            <option value="{{ $suppInsurance->id }}" @selected($suppInsurance->id == old('supp_insurance_id', $surgery->supp_insurance_id))>{{ $suppInsurance->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             @foreach($doctorRoles as $doctorRole)
                                 <div class="col">
                                     <div class="form-group">

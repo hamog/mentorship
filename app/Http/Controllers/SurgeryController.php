@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SurgeryStoreRequest;
 use App\Http\Requests\SurgeryUpdateRequest;
 use App\Models\DoctorRole;
+use App\Models\Insurance;
 use App\Models\Operation;
 use App\Models\Surgery;
 use Illuminate\Http\Request;
@@ -31,7 +32,11 @@ class SurgeryController extends Controller
             //->where('status', 1)
             ->pluck('name', 'id');
 
-        return view('admin.surgery.create', compact('doctorRoles', 'operations'));
+        $insurances = Insurance::query()->select(['id', 'name', 'type'])->get();
+        $basicInsurances = $insurances->where('type', 'basic');
+        $suppInsurances = $insurances->where('type', 'supplementary');
+
+        return view('admin.surgery.create', compact('doctorRoles', 'operations', 'basicInsurances', 'suppInsurances'));
     }
 
     /**
@@ -82,7 +87,11 @@ class SurgeryController extends Controller
             //->where('status', 1)
             ->pluck('name', 'id');
 
-        return view('admin.surgery.edit', compact('doctorRoles', 'operations', 'surgery'));
+        $insurances = Insurance::query()->select(['id', 'name', 'type'])->get();
+        $basicInsurances = $insurances->where('type', 'basic');
+        $suppInsurances = $insurances->where('type', 'supplementary');
+
+        return view('admin.surgery.edit', compact('doctorRoles', 'operations', 'surgery', 'basicInsurances', 'suppInsurances'));
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\DoctorRole;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class SurgeryStoreRequest extends FormRequest
@@ -24,12 +26,26 @@ class SurgeryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'basic_insurance_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('insurances', 'id')->where(function (Builder $query) {
+                    return $query->where('type', 'basic');
+                })
+            ],
+            'supp_insurance_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('insurances', 'id')->where(function (Builder $query) {
+                    return $query->where('type', 'supplementary');
+                })
+            ],
             'patient_name' => 'required|string|max:100',
             'patient_national_code' => 'required|digits:10',
             'document_number' => 'required|numeric',
             'description' => 'nullable|string|max:1000',
-            'surgeried_at' => 'required|date_format:Y-m-d',
-            'released_at' => 'required|date_format:Y-m-d',
+            'surgeried_at' => 'required|date_format:Y-m-d|before_or_equal:' . today()->format('Y--m-d'),
+            'released_at' => 'required|date_format:Y-m-d|after_or_equal:' . $this->input('surgeried_at'),
 
             'operations' => 'required|array',
             'operations.*' => 'required|integer|exists:operations,id',

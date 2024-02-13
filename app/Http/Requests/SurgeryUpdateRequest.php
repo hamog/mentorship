@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\DoctorRole;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class SurgeryUpdateRequest extends FormRequest
@@ -24,6 +26,20 @@ class SurgeryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'basic_insurance_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('insurances', 'id')->where(function (Builder $query) {
+                    return $query->where('type', 'basic');
+                })
+            ],
+            'supp_insurance_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('insurances', 'id')->where(function (Builder $query) {
+                    return $query->where('type', 'supplementary');
+                })
+            ],
             'patient_name' => 'required|string|max:100',
             'patient_national_code' => 'required|digits:10',
             'document_number' => 'required|numeric',

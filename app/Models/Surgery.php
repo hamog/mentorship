@@ -10,6 +10,8 @@ class Surgery extends Model
     use HasFactory;
 
     protected $fillable = [
+        'basic_insurance_id',
+        'supp_insurance_id',
         'patient_name',
         'patient_national_code',
         'document_number',
