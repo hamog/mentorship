@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctor_surgery', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Doctor::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Surgery::class)->constrained()->cascadeOnDelete();
-            $table->foreignId('doctor_role_id');
-            $table->foreignId('invoice_id')->nullable();
+            $table->unsignedInteger('amount');
+            $table->text('description')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctor_surgery');
+        Schema::dropIfExists('invoices');
     }
 };

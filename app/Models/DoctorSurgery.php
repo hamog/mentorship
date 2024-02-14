@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DoctorSurgery extends Model
 {
-    use HasFactory;
-
     public function doctor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Doctor::class);
@@ -22,6 +19,11 @@ class DoctorSurgery extends Model
     public function doctorRole(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(DoctorRole::class, 'doctor_role_id');
+    }
+
+    public function invoice(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Invoice::class, 'invoice_id');
     }
 
     public function getDoctorQuotaAmount(): int
