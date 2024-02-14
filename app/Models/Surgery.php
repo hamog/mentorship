@@ -20,14 +20,14 @@ class Surgery extends Model
         'released_at'
     ];
 
-    public function getTotalPrice()
+    public function getTotalPrice(): int
     {
-        return $this->operations->sum('price');
+        return (int) $this->operations->sum('price');
     }
 
     public function getDoctorQuotaAmount(DoctorRole $doctorRole): int
     {
-        return round(($doctorRole->quota / 100) * $this->getTotalPrice());
+        return round(((int) $doctorRole->quota / 100) * $this->getTotalPrice());
     }
 
     public function operations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

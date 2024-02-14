@@ -59,7 +59,7 @@ class SurgeryController extends Controller
         $attachDoctors = [];
         foreach ($request->input('doctors') as $roleId => $doctorId) {
             if ($doctorId) {
-                $doctorRole = DoctorRole::query()->find($roleId);
+                $doctorRole = DoctorRole::find($roleId);
                 $amount = $surgery->getDoctorQuotaAmount($doctorRole);
                 $attachDoctors[$doctorId] = ['doctor_role_id' => $roleId, 'amount' => $amount];
             }
@@ -116,7 +116,7 @@ class SurgeryController extends Controller
         $syncDoctors = [];
         foreach ($request->input('doctors') as $roleId => $doctorId) {
             if ($doctorId) {
-                $doctorRole = DoctorRole::query()->find($roleId);
+                $doctorRole = DoctorRole::find($roleId);
                 $amount = $surgery->getDoctorQuotaAmount($doctorRole);
                 $syncDoctors[$doctorId] = ['doctor_role_id' => $roleId, 'amount' => $amount];
             }

@@ -27,10 +27,4 @@ class DoctorSurgery extends Model
     {
         return $this->belongsTo(Invoice::class, 'invoice_id');
     }
-
-    public function getDoctorQuotaAmount(): int
-    {
-        return round(($this->doctorRole->quota / 100) * $this->surgery->getTotalPrice());
-    }
-
 }
