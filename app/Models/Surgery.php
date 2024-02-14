@@ -25,6 +25,11 @@ class Surgery extends Model
         return $this->operations->sum('price');
     }
 
+    public function getDoctorQuotaAmount(DoctorRole $doctorRole): int
+    {
+        return round(($doctorRole->quota / 100) * $this->getTotalPrice());
+    }
+
     public function operations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Operation::class, 'operation_surgery')
@@ -34,6 +39,6 @@ class Surgery extends Model
     public function doctors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Doctor::class, 'doctor_surgery')
-            ->withPivot(['doctor_role_id']);;
+            ->withPivot(['doctor_role_id', 'amount']);
     }
 }
