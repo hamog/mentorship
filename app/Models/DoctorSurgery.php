@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DoctorSurgery extends Model
 {
+    public $timestamps = false;
+
     public function doctor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Doctor::class);
