@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('doctor_roles', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
-            $table->unsignedTinyInteger('quota');
+            $table->unsignedTinyInteger('quota'); // 0 to 100
             $table->boolean('required')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();

@@ -34,7 +34,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="patient_name" class="control-label">نام بیمار <span class="text-danger">&starf;</span></label>
-                                    <input type="text" class="form-control" name="patient_name" id="patient_name" placeholder="نام بیمار را اینجا وارد کنید" value="{{ old('patient_name', $surgery->patient_name) }}" required autofocus>
+                                    <input type="text" class="form-control" name="patient_name" id="patient_name" placeholder="نام بیمار را اینجا وارد کنید" value="{{ old('patient_name',$surgery->patient_name) }}" required autofocus>
                                 </div>
                             </div>
                             <div class="col">

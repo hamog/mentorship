@@ -26,7 +26,8 @@ class SurgeryController extends Controller
         $doctorRoles = DoctorRole::query()
             ->with('doctors')
             ->where('status', 1)
-            ->get(['id', 'title', 'required']);
+            ->select(['id', 'title', 'required'])
+            ->get();
 
         $operations = Operation::query()
             //->where('status', 1)

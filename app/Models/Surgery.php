@@ -20,6 +20,11 @@ class Surgery extends Model
         'released_at'
     ];
 
+    public function getTotalPrice()
+    {
+        return $this->operations->sum('price');
+    }
+
     public function operations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Operation::class, 'operation_surgery')
