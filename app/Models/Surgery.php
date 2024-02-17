@@ -22,7 +22,7 @@ class Surgery extends Model
 
     public function getTotalPrice(): int
     {
-        return (int) $this->operations->sum('price');
+        return (int) $this->operations->sum('pivot.amount');
     }
 
     public function getDoctorQuotaAmount(DoctorRole $doctorRole): int
