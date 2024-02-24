@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notification;
 
 class DoctorSurgery extends Model
 {
@@ -27,6 +28,11 @@ class DoctorSurgery extends Model
     public function getDoctorQuotaAmount(): int
     {
         return round(($this->doctorRole->quota / 100) * $this->surgery->getTotalPrice());
+    }
+
+    public function show(Notification $notification)
+    {
+
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        $logo = Helpers::setting('logo', asset('images/logo.png'));
+
         return view('auth.admin.login');
     }
 
