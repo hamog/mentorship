@@ -26,6 +26,7 @@
                             <th>دکترها</th>
                             <th>نام بیمار</th>
                             <th>عمل (ها)</th>
+                            <th>مبلغ (تومان)</th>
                             <th>عملیات</th>
                         </tr>
                         </thead>
@@ -40,6 +41,7 @@
                                 <td>
                                     {{ implode(', ', $surgery->operations->pluck('name')->all()) }}
                                 </td>
+                                <td>{{ number_format($surgery->getTotalPrice()) }}</td>
                                 <td>
 
                                     <a href="{{ route('admin.surgeries.edit', $surgery->id) }}" class="btn btn-warning">ویرایش</a>

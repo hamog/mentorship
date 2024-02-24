@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
 
 class DoctorSurgery extends Model
 {
-    use HasFactory;
+    public $timestamps = false;
 
     public function doctor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -25,14 +24,8 @@ class DoctorSurgery extends Model
         return $this->belongsTo(DoctorRole::class, 'doctor_role_id');
     }
 
-    public function getDoctorQuotaAmount(): int
+    public function invoice(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return round(($this->doctorRole->quota / 100) * $this->surgery->getTotalPrice());
+        return $this->belongsTo(Invoice::class, 'invoice_id');
     }
-
-    public function show(Notification $notification)
-    {
-
-    }
-
 }

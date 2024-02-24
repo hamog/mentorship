@@ -16,6 +16,7 @@ class SurgeryController extends Controller
     {
         $surgeries = Surgery::query()
             ->latest('id')
+            ->with(['operations', 'doctors'])
             ->paginate();
 
         return view('admin.surgery.index', compact('surgeries'));
@@ -58,7 +59,9 @@ class SurgeryController extends Controller
         $attachDoctors = [];
         foreach ($request->input('doctors') as $roleId => $doctorId) {
             if ($doctorId) {
-                $attachDoctors[$doctorId] = ['doctor_role_id' => $roleId];
+                $doctorRole = DoctorRole::find($roleId);
+                $amount = $surgery->getDoctorQuotaAmount($doctorRole);
+                $attachDoctors[$doctorId] = ['doctor_role_id' => $roleId, 'amount' => $amount];
             }
         }
         $surgery->doctors()->attach($attachDoctors);
@@ -113,7 +116,9 @@ class SurgeryController extends Controller
         $syncDoctors = [];
         foreach ($request->input('doctors') as $roleId => $doctorId) {
             if ($doctorId) {
-                $syncDoctors[$doctorId] = ['doctor_role_id' => $roleId];
+                $doctorRole = DoctorRole::find($roleId);
+                $amount = $surgery->getDoctorQuotaAmount($doctorRole);
+                $syncDoctors[$doctorId] = ['doctor_role_id' => $roleId, 'amount' => $amount];
             }
         }
         $surgery->doctors()->sync($syncDoctors);

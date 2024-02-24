@@ -44,8 +44,8 @@ class SurgeryUpdateRequest extends FormRequest
             'patient_national_code' => 'required|digits:10',
             'document_number' => 'required|numeric',
             'description' => 'nullable|string|max:1000',
-            'surgeried_at' => 'required|date_format:Y-m-d',
-            'released_at' => 'required|date_format:Y-m-d',
+            'surgeried_at' => 'required|date_format:Y-m-d|before_or_equal:' . today()->format('Y--m-d'),
+            'released_at' => 'required|date_format:Y-m-d|after_or_equal:' . $this->input('surgeried_at'),
 
             'operations' => 'required|array',
             'operations.*' => 'required|integer|exists:operations,id',
