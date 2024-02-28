@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -19,8 +20,16 @@ class UserController extends Controller
 
     }
 
-    public function create()
+    public function create(Sms $sms)
     {
+        try {
+            $user = User::create([]);
+            $sms->send($user->mobile, 'test message');
 
+            return 'OK';
+        } catch (ModelNotFoundException $exception) {
+            return  $exception->getMessage();
+        }
     }
+
 }
