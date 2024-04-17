@@ -9,6 +9,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/products', function () {
+    return view('product');
+});
+
+Route::post('/products', function (\Illuminate\Http\Request $request) {
+    $product = \App\Models\Product::query()->create([
+        'title' => 'my test product'
+    ]);
+    if ($request->galleries) {
+        foreach ($request->galleries as $gallery) {
+            $product->addGallery($gallery);
+        }
+    }
+
+    $product->refresh();
+    dd($product->galleries);
+});
+
 Route::middleware('guest')->name('admin.')->group(function () {
     //auth
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
